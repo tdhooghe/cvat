@@ -12,9 +12,8 @@ from dj_rest_auth.views import (
 from dj_rest_auth.registration.views import (
     VerifyEmailView, ResendEmailVerificationView
 )
-from allauth.account.views import EmailVerificationSentView, ConfirmEmailView
 from allauth.account import app_settings as allauth_settings
-from cvat.apps.iam.views import SigningView, RegisterViewEx
+from cvat.apps.iam.views import RegisterViewEx
 from django.views.generic import TemplateView
 
 urlpatterns = [
@@ -22,7 +21,6 @@ urlpatterns = [
     # URLs that require a user to be logged in with a valid session / token.
     path('logout', LogoutView.as_view(), name='rest_logout'),
     path('password/change', PasswordChangeView.as_view(), name='rest_password_change'),
-    path('signing', SigningView.as_view(), name='rest_signing')
 ]
 
 if settings.IAM_TYPE == 'BASIC':
@@ -31,7 +29,8 @@ if settings.IAM_TYPE == 'BASIC':
         path('password/reset', PasswordResetView.as_view(), name='rest_password_reset'),
         path('password/reset/confirm', PasswordResetConfirmView.as_view(),
             name='rest_password_reset_confirm'),
-        re_path(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$',
+        re_path(r'^password-reset/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/' +
+            r'(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$',
             TemplateView.as_view(template_name="password_reset_confirm.html"),
             name='password_reset_confirm'),
 
@@ -54,8 +53,8 @@ if settings.IAM_TYPE == 'BASIC':
 
         if allauth_settings.EMAIL_VERIFICATION != allauth_settings.EmailVerificationMethod.NONE:
             urlpatterns += [
-                path('verify-email', VerifyEmailView.as_view(), name='rest_verify_email'),
-                path('resend-email', ResendEmailVerificationView.as_view(),
+                path('registration/verify-email', VerifyEmailView.as_view(), name='rest_verify_email'),
+                path('registration/resend-email', ResendEmailVerificationView.as_view(),
                     name="rest_resend_email"),
 
                 # This url is used by django-allauth and empty TemplateView is
