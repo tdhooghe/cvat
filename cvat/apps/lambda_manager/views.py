@@ -79,6 +79,13 @@ class LambdaGateway:
         return response
 
     def invoke(self, func, payload):
+        if os.getenv('KUBERNETES_SERVICE_HOST'):
+            return self._http(method="post", url='/api/function_invocations',
+            data=payload, headers={
+                'x-nuclio-function-name': func.id,
+                'x-nuclio-path': '/'
+            })
+
         # Note: call the function directly without the nuclio dashboard
         # host.docker.internal for Linux will work only with Docker 20.10+
         NUCLIO_TIMEOUT = settings.NUCLIO['DEFAULT_TIMEOUT']
