@@ -41,12 +41,13 @@ helm dependency update
    Note for Minikube use:
    - because the Traefik creates its main service with `Loadbalanser` type,
      which involve the assignment of externalIP by Cloud, what never happens on Minikube,
-     you need to explicitly set the externalIP address for the traefic service with:
+     you need to explicitly set the externalIP address for the traefic service.
+     Add the following to `values.override.yaml` file:
      ```yaml
      traefik:
        service:
          externalIPs:
-           - "your minikube ip"
+           - "your minikube IP (can be obtained with `minicube ip` command)"
      ```
    - Also ensure that your CVAT ingress appears on your hosts file (/etc/hosts).
      You can do this by running this command:
@@ -54,8 +55,6 @@ helm dependency update
      ```shell
      echo "$(minikube ip) cvat.local" | sudo tee -a /etc/hosts
      ```
-1. Create certificates for https (for example: <https://github.com/jetstack/cert-manager/>).
-   This step is not yet covered in this guide.
 
 ## Configuration
 1. Create `values.override.yaml` file inside `helm-chart` directory.
@@ -112,7 +111,7 @@ Before starting, ensure that the following prerequisites are met:
      minikube addons enable registry-aliases
      ```
      Before Docker container images can be pushed to your newly created unsecure registry,
-     you need to add its address ($(minikube ip):5000) to the list of unsecure registries to
+     you need to add its address (`$(minikube ip):5000`) to the list of unsecure registries to
      instruct Docker to accept working against it:
      follow the instructions in the [Docker documentation](https://docs.docker.com/registry/insecure/#deploy-a-plain-http-registry)
 
