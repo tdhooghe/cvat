@@ -25,8 +25,8 @@ services:
     networks:
       - cvat
 
-  cvat:
-    container_name: cvat
+  cvat_server:
+    container_name: cvat_server
     image: cvat/server:${CVAT_VERSION:-latest}
     restart: always
     depends_on:
