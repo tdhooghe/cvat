@@ -53,7 +53,8 @@ cvat:
       additionalEnv: []
       additionalVolumes: []
       additionalVolumeMounts: []
-    image: openvino/cvat_server
+    replicas: 1
+    image: cvat/server
     tag: latest
     permissionFix:
       enabled: true
@@ -72,7 +73,7 @@ cvat:
         size: 20Gi
   frontend:
     replicas: 1
-    image: openvino/cvat_ui
+    image: cvat/ui
     tag: latest
     labels: {}
     #  test: test
