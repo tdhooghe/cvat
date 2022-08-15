@@ -26,12 +26,12 @@ appVersion: latest
 
 dependencies:
   - name: redis
-    version: "12.9.*"
+    version: "17.0.*"
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
 
   - name: postgresql
-    version: "10.3.*"
+    version: "10.16.*"
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
 
@@ -41,21 +41,21 @@ dependencies:
     condition: nuclio.enabled
 
   - name: logstash
-    version: 6.8.22
+    version: "6.8.*"
     repository: https://helm.elastic.co
     condition: analytics.enabled
 
   - name: elasticsearch
-    version: 6.8.22
+    version: "6.8.*"
     repository: https://helm.elastic.co
     condition: analytics.enabled
 
   - name: kibana
-    version: 6.8.22
+    version: "6.8.*"
     repository: https://helm.elastic.co
     condition: analytics.enabled
 
   - name: traefik
-    version: 10.15.0
+    version: 10.24.0
     repository: https://helm.traefik.io/traefik
     condition: ingress.enabled
