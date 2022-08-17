@@ -2281,7 +2281,7 @@ def _import_project_dataset(request, rq_id, rq_func, pk, format_name, filename=N
 
             data = _import_from_cloud_storage(storage, filename)
 
-            fd, filename = mkstemp(prefix='cvat_')
+            fd, filename = mkstemp(prefix='cvat_', dir=settings.TMP_FILES_ROOT)
             with open(filename, 'wb+') as f:
                 f.write(data.getbuffer())
 

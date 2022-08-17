@@ -863,7 +863,7 @@ def _import(importer, request, rq_id, Serializer, file_field_name, location_conf
 
             data = _import_from_cloud_storage(storage, file_name)
 
-            fd, filename = mkstemp(prefix='cvat_')
+            fd, filename = mkstemp(prefix='cvat_', dir=settings.TMP_FILES_ROOT)
             with open(filename, 'wb+') as f:
                 f.write(data.getbuffer())
 

@@ -87,7 +87,7 @@ def docker_cp(source, target):
 
 
 def exec_cvat(command):
-    _run(f"docker exec {PREFIX}_cvat_1 {command}")
+    _run(f"docker exec {PREFIX}_cvat_server_1 {command}")
 
 
 def exec_cvat_db(command):
@@ -104,12 +104,12 @@ def running_containers():
 
 
 def dump_db():
-    if 'test_cvat_1' not in running_containers():
+    if 'test_cvat_server_1' not in running_containers():
         pytest.exit("CVAT is not running")
     with open(osp.join(CVAT_DB_DIR, "data.json"), "w") as f:
         try:
             run( # nosec
-                "docker exec test_cvat_1 \
+                "docker exec test_cvat_server_1 \
                     python manage.py dumpdata \
                     --indent 2 --natural-foreign \
                     --exclude=auth.permission --exclude=contenttypes".split(),
